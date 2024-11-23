@@ -5,7 +5,7 @@
 // What are our invariants?
 
 // 1. The total supply of DSC should be less than the total supply
-// collateral 
+// collateral
 
 // Getter view function should never revert <- evergreen invariant
 
@@ -32,7 +32,7 @@ contract Invariants is StdInvariant, Test {
     function setUp() external {
         deployer = new DeployDSC();
         (dsc, dsce, config) = deployer.run();
-        (,,weth,wbtc,) = config.activeNetworkConfig();
+        (,, weth, wbtc,) = config.activeNetworkConfig();
         // targetContract(address(dsce));
         handler = new Handler(dsce, dsc);
         targetContract(address(handler));
@@ -51,6 +51,7 @@ contract Invariants is StdInvariant, Test {
         console.log("weth value: ", wethValue);
         console.log("wbth value: ", wbtcValue);
         console.log("total supply: ", totalSupply);
+        console.log("Times mint called: ", handler.timeMintIsCalled());
 
         assert(wethValue + wbtcValue >= totalSupply);
     }
